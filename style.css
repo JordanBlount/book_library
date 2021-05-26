@@ -16,7 +16,8 @@ TODO: Add styling for "New Book" button OR "+" button
 }
 
 body {
-    display: grid;
+    display: flex;
+    flex-direction: column;
 }
 
 nav {
@@ -27,37 +28,21 @@ nav {
     padding: 1.25rem;
 }
 
-#appName {
+.app-name {
     color: white;
     font-size: 1.25rem;
     font-weight: bold;
     margin-right: 3rem;
 }
 
-nav > ul {
-    list-style: none;
-    text-decoration: none;
-    color: white;
-}
-
-nav > ul > li {
-    float: left;
-    margin-right: 1.5rem;
-}
-
-nav > ul > li > a {
-    text-decoration: none;
-    color: white;
-}
-
-#library {
+.library {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 1rem;
     padding: 1rem;
 }
 
-.bookCard {
+.card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,11 +52,11 @@ nav > ul > li > a {
     padding: 2rem;
 }
 
-.bookCard > p {
+.card > p {
     padding-bottom: 0.5rem;
 }
 
-#addBook {
+.add-btn {
     font-size: 4rem;
     font-weight: bold;
     color: white;
@@ -79,9 +64,17 @@ nav > ul > li > a {
     border: none;
 }
 
+.add-btn:hover {
+    opacity: 0.75;
+}
+
+.add-btn:active {
+    opacity: 0.95;
+}
+
 .delete {
-    padding: 0.75rem;
-    margin-top: 1rem;
+    padding: 0.25em 0.75em;
+    margin-top: 1em;
 }
 
 .pages {

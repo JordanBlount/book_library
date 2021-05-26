@@ -1,0 +1,93 @@
+/* 
+
+TODO: Create basic layout for library page
+
+TODO: Create styles for the new book card
+
+TODO: Add styling for "New Book" button OR "+" button
+
+*/
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    display: grid;
+}
+
+nav {
+    display: flex;
+    justify-content: flex;
+    align-items: center;
+    background-color: rgb(235, 154, 3);
+    padding: 1.25rem;
+}
+
+#appName {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-right: 3rem;
+}
+
+nav > ul {
+    list-style: none;
+    text-decoration: none;
+    color: white;
+}
+
+nav > ul > li {
+    float: left;
+    margin-right: 1.5rem;
+}
+
+nav > ul > li > a {
+    text-decoration: none;
+    color: white;
+}
+
+#library {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1rem;
+    padding: 1rem;
+}
+
+.bookCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightblue;
+    color: rgb(46, 46, 46);
+    font-size: 1rem;
+    padding: 2rem;
+}
+
+.bookCard > p {
+    padding-bottom: 0.5rem;
+}
+
+#addBook {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+    background-color: rgb(207, 207, 207);
+    border: none;
+}
+
+.delete {
+    padding: 0.75rem;
+    margin-top: 1rem;
+}
+
+.pages {
+    color: rgb(49, 49, 49);
+}
+
+.hasRead {
+    color: green;
+}

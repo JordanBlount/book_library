@@ -17,6 +17,10 @@ let currIndex = 0;
 loadFromLocalStorage();
 // test();
 
+//FIXME: Contains slight error with the sorting of elements once 
+//       once an element has been deleted. The ids (indexs) are 
+//       being copied to new books. I need to fix this for it to 
+//       fully work
 function test() {
     for(let i = 0; i < 6; i++) {
         addBookToLibrary("Test " + i + "", "Noodles", 50 * i, true, getCurrentIndex());

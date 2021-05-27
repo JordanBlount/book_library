@@ -5,6 +5,7 @@ let addBtnCont = document.getElementById("btn-container");
 // let readBtns = document.querySelectorAll(".read");
 var modal = document.getElementById("addBookModel");
 var closeBtn = document.getElementsByClassName("close")[0];
+var newBookBtn = document.getElementById("addBook");
 
 let bookLibrary = [];
 
@@ -13,6 +14,12 @@ addBook.addEventListener("click", function() {
     modal.style.display = "block";
     // let rnd = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
     // addBookToLibrary("lol", "nigas", rnd, true);
+});
+
+newBookBtn.addEventListener("click", function() {
+    if(addBookFromModel()) {
+        modal.style.display = "none";
+    }
 });
 
 closeBtn.onclick = function () {
@@ -48,8 +55,25 @@ function Book(title, author, pages, hasRead) {
     }
 }
 
-function openNewBookForm() {
-    // Opens up a form to enter in book info
+function addBookFromModel() {
+    let title = document.getElementById("mTitle");
+    let author = document.getElementById("mAuthor");
+    let pages = document.getElementById("mPages");
+    let hasRead = document.getElementById("mhasRead");
+    if(title.value !== "" && author.value !== "" && !negativeNum(pages)) {
+        addBookToLibrary(title.value, author.value, pages.value, hasRead.checked);
+
+        title.value = "";
+        author.value = "";
+        pages.value = "";
+        hasRead.checked = false;
+        return true;
+    }
+    return false;
+}
+
+function negativeNum(num) {
+    return num > 0;
 }
 
 function addBookToLibrary(title, author, pages, hasRead) {

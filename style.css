@@ -21,21 +21,25 @@ body {
     color: rgb(49, 49, 49);
 }
 
+.container {
+    width: 95%;
+    margin: 0 auto;
+}
+
 nav {
+    background-color: rgb(235, 154, 3);
+}
+
+.nav_style {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(235, 154, 3);
-    padding: 1.25rem;
+    padding: 1.25em 0;
 }
 
 .nav-list {
     display: flex;
     list-style: none;
-}
-
-.nav__item {
-    margin-left: 1.25em;
 }
 
 .nav__link {
@@ -48,14 +52,13 @@ nav {
     color: white;
     font-size: 1.25rem;
     font-weight: bold;
-    margin-right: 3rem;
 }
 
 .library {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 1rem;
-    padding: 1rem;
+    margin-top: 1em;
 }
 
 .card {
@@ -182,7 +185,6 @@ nav {
 
 .model__text {
     font-size: 1.25rem;
-    /* margin-bottom: 0.25em; */
 }
 
 .model__input {
@@ -199,6 +201,6 @@ nav {
     align-items: center;
 }
 
-.rdo {
+.chk {
     margin-left: 0.5em;
 }

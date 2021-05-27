@@ -16,6 +16,8 @@ https://www.w3schools.com/howto/howto_css_modals.asp
 
 https://medium.com/@nerdplusdog/a-how-to-guide-for-modal-boxes-with-javascript-html-and-css-6a49d063987e
 
+https://developer.mozilla.org/en-US/docs/Web/API/Event/target
+
 
 
 **Creating HTML elements in Javascript**

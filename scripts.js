@@ -1,8 +1,6 @@
 let libraryGrid = document.getElementById("library");
 let addBook = document.getElementById("add-btn");
 let addBtnCont = document.getElementById("btn-container");
-// let delBtns = document.querySelectorAll(".del");
-// let readBtns = document.querySelectorAll(".read");
 var modal = document.getElementById("addBookModel");
 var closeBtn = document.getElementsByClassName("close")[0];
 var newBookBtn = document.getElementById("addBook");
@@ -14,12 +12,11 @@ let mPages = document.getElementById("mPages");
 let mHasRead = document.getElementById("mhasRead");
 
 let bookLibrary = [];
+let currIndex = 0;
 
-updateLibrary();
+loadFromLocalStorage();
 addBook.addEventListener("click", function() {
     modal.style.display = "block";
-    // let rnd = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
-    // addBookToLibrary("lol", "nigas", rnd, true);
 });
 
 newBookBtn.addEventListener("click", function() {
@@ -40,11 +37,12 @@ window.onclick = function (event) {
     }
 }
 
-function Book(title, author, pages, hasRead) {
+function Book(title, author, pages, hasRead, index) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.hasRead = hasRead;
+    this.index = index;
 
     this.info = function() {
         return `${this.title} by ${this.author}, ${this.pages} pages, ` 
@@ -84,11 +82,18 @@ function clearModelInputs() {
     mHasRead.checked = false;
 }
 
+//FIXME: Something is wrong
+function getCurrentIndex() {
+    return bookLibrary.length > 0 ? bookLibrary[bookLibrary.length - 1].index + 1 : 0;
+}
+
 function addBookToLibrary(title, author, pages, hasRead) {
     if(title !== '' && author !== '' && pages !== 0) {
-        let book = new Book(title, author, pages, hasRead);
+        let index = getCurrentIndex();
+        let book = new Book(title, author, pages, hasRead, index);
         bookLibrary.push(book);
-        addBookToGrid(book, bookLibrary.length - 1);
+        addBookToGrid(book, index);
+        window.localStorage.setItem(`book-${index}`, JSON.stringify(book));
     }
 }
 
@@ -136,7 +141,7 @@ function addBookToGrid(book, index) {
     readBtn.textContent = "Read";
 
     readBtn.addEventListener('click', function() {
-        book.changeStatus();
+        updateStatus(book);
         if(book.hasRead) {
             hasRead.style.color = "green";
             hasRead.innerHTML = "Read";
@@ -158,18 +163,21 @@ function addBookToGrid(book, index) {
     libraryGrid.insertBefore(card, addBtnCont);    
 }
 
-function removeBookFromLibrary(id) {
-    bookLibrary.pop(bookLibrary[id]);
-    libraryGrid.removeChild(document.querySelector(`[data-index="${id}"]`));
+//TODO: Make a browser SessionStorage to create undo with Ctrl+Z
+function removeBookFromLibrary(index) {
+    bookLibrary.pop(bookLibrary[index]);
+    libraryGrid.removeChild(document.querySelector(`[data-index="${index}"]`));
+    window.localStorage.removeItem(`book-${index}`);
 }
 
-function findBook(id) {
-    return bookLibrary[id];
+function updateStatus(book) {
+    book.changeStatus();
+    window.localStorage.setItem(`book-${book.index}`, JSON.stringify(book));
 }
 
 //
-function updateLibrary() {
-    bookLibrary.forEach(function(item, index) {
+function updateLibrary(array) {
+    array.forEach(function(item, index) {
         let card = document.createElement("div");   
         card.className = "card";
         card.setAttribute("data-index", index);
@@ -213,7 +221,7 @@ function updateLibrary() {
         readBtn.textContent = "Read";
 
         readBtn.addEventListener('click', function() {
-            item.changeStatus();
+            updateStatus(item);
             if(item.hasRead) {
                 hasRead.style.color = "green";
                 hasRead.innerHTML = "Read";
@@ -237,5 +245,39 @@ function updateLibrary() {
 }
 
 function loadFromLocalStorage() {
+    if(!storageAvailable('localStorage')) {
+        return;
+    } else {
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            let book = JSON.parse(localStorage.getItem(key));
+            bookLibrary.push(new Book(book.title, book.author, book.pages, book.hasRead, book.index));
+        }
+        updateLibrary(bookLibrary);
+    }
+}
 
+function storageAvailable(type) {
+    var storage;
+    try {
+        storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            (storage && storage.length !== 0);
+    }
 }

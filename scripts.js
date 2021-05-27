@@ -7,6 +7,12 @@ var modal = document.getElementById("addBookModel");
 var closeBtn = document.getElementsByClassName("close")[0];
 var newBookBtn = document.getElementById("addBook");
 
+// Model inputs
+let mTitle = document.getElementById("mTitle");
+let mAuthor = document.getElementById("mAuthor");
+let mPages = document.getElementById("mPages");
+let mHasRead = document.getElementById("mhasRead");
+
 let bookLibrary = [];
 
 updateLibrary();
@@ -24,10 +30,13 @@ newBookBtn.addEventListener("click", function() {
 
 closeBtn.onclick = function () {
     modal.style.display = "none";
+    clearModelInputs();
 }
+
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        clearModelInputs();
     }
 }
 
@@ -56,17 +65,9 @@ function Book(title, author, pages, hasRead) {
 }
 
 function addBookFromModel() {
-    let title = document.getElementById("mTitle");
-    let author = document.getElementById("mAuthor");
-    let pages = document.getElementById("mPages");
-    let hasRead = document.getElementById("mhasRead");
-    if(title.value !== "" && author.value !== "" && !negativeNum(pages)) {
-        addBookToLibrary(title.value, author.value, pages.value, hasRead.checked);
-
-        title.value = "";
-        author.value = "";
-        pages.value = "";
-        hasRead.checked = false;
+    if(mTitle.value !== "" && mAuthor.value !== "" && !negativeNum(mPages)) {
+        addBookToLibrary(mTitle.value, mAuthor.value, mPages.value, mHasRead.checked);
+        clearModelInputs();
         return true;
     }
     return false;
@@ -74,6 +75,13 @@ function addBookFromModel() {
 
 function negativeNum(num) {
     return num > 0;
+}
+
+function clearModelInputs() {
+    mTitle.value = "";
+    mAuthor.value = "";
+    mPages.value = "";
+    mHasRead.checked = false;
 }
 
 function addBookToLibrary(title, author, pages, hasRead) {

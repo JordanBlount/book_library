@@ -133,7 +133,7 @@ function addBookToGrid(book, index) {
     delBtn.textContent = "Delete";
 
     delBtn.addEventListener('click', function() {
-        removeBookFromLibrary(index);
+        removeBookFromLibrary(book);
     });
 
     let readBtn = document.createElement("button");
@@ -164,10 +164,11 @@ function addBookToGrid(book, index) {
 }
 
 //TODO: Make a browser SessionStorage to create undo with Ctrl+Z
-function removeBookFromLibrary(index) {
-    bookLibrary.pop(bookLibrary[index]);
-    libraryGrid.removeChild(document.querySelector(`[data-index="${index}"]`));
-    window.localStorage.removeItem(`book-${index}`);
+function removeBookFromLibrary(book) {
+    let bIndex = bookLibrary.indexOf(book)
+    bookLibrary.splice(bIndex, 1);
+    libraryGrid.removeChild(document.querySelector(`[data-index="${book.index}"]`));
+    window.localStorage.removeItem(`book-${book.index}`);
 }
 
 function updateStatus(book) {
@@ -213,7 +214,7 @@ function updateLibrary(array) {
         delBtn.textContent = "Delete";
 
         delBtn.addEventListener('click', function() {
-            removeBookFromLibrary(index);
+            removeBookFromLibrary(item);
         });
 
         let readBtn = document.createElement("button");

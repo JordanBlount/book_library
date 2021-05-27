@@ -14,6 +14,8 @@ https://sabe.io/tutorials/how-to-create-modal-popup-box
 
 https://www.w3schools.com/howto/howto_css_modals.asp
 
+https://medium.com/@nerdplusdog/a-how-to-guide-for-modal-boxes-with-javascript-html-and-css-6a49d063987e
+
 
 
 **Creating HTML elements in Javascript**

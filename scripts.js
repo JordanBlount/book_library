@@ -235,3 +235,7 @@ function updateLibrary() {
         libraryGrid.insertBefore(card, addBtnCont);
     });
 }
+
+function loadFromLocalStorage() {
+
+}

@@ -26,7 +26,34 @@
             <button class="add-btn" id="add-btn">+</button>
         </div>
     </div>
-
+    
+    <div id="addBookModel" class="modal">
+        <div class="modal-content">
+            <div class="model-header">
+                <span class="close">&times;</span>
+            </div>
+            <div class="model-form">
+                <div class="model__section">
+                    <p class="model__text">Title</p>
+                    <input type="text" name="title" id="mTitle" class="model__input">
+                </div>
+                <div class="model__section">
+                    <p class="model__text">Author</p>
+                    <input type="text" name="author" id="mAuthor" class="model__input">
+                </div>
+                <div class="model__section">
+                    <p class="model__text">Pages</p>
+                    <input type="number" name="pages" id="mPages" class="model__input">
+                </div>
+                <div class="model__section row">
+                    <p class="model__text">Read</p>
+                    <input type="radio" name="Read" class="rdo model__input" id="mhasRead">
+                </div>
+                <button type="submit" class="model__addBtn" id="addBook">Add</button>
+            </div>
+        </div>
+    
+    </div>
 
 </body>
 </html>

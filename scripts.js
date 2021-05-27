@@ -1,17 +1,28 @@
 let libraryGrid = document.getElementById("library");
 let addBook = document.getElementById("add-btn");
 let addBtnCont = document.getElementById("btn-container");
-let delBtns = document.querySelectorAll(".del");
-let readBtns = document.querySelectorAll(".read");
+// let delBtns = document.querySelectorAll(".del");
+// let readBtns = document.querySelectorAll(".read");
+var modal = document.getElementById("addBookModel");
+var closeBtn = document.getElementsByClassName("close")[0];
 
 let bookLibrary = [];
 
 updateLibrary();
 addBook.addEventListener("click", function() {
-    let rnd = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
-    addBookToLibrary("lol", "nigas", rnd, true);
+    modal.style.display = "block";
+    // let rnd = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+    // addBookToLibrary("lol", "nigas", rnd, true);
 });
 
+closeBtn.onclick = function () {
+    modal.style.display = "none";
+}
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
 function Book(title, author, pages, hasRead) {
     this.title = title;

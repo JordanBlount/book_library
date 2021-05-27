@@ -15,6 +15,14 @@ let bookLibrary = [];
 let currIndex = 0;
 
 loadFromLocalStorage();
+// test();
+
+function test() {
+    for(let i = 0; i < 6; i++) {
+        addBookToLibrary("Test " + i + "", "Noodles", 50 * i, true, getCurrentIndex());
+    }
+}
+
 addBook.addEventListener("click", function() {
     modal.style.display = "block";
 });

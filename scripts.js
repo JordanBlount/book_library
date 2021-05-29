@@ -23,7 +23,7 @@ loadFromLocalStorage();
 //       fully work
 function test() {
     for(let i = 0; i < 6; i++) {
-        addBookToLibrary("Test " + i + "", "Noodles", 50 * i, true, getCurrentIndex());
+        addBookToLibrary("Test " + getCurrentIndex() + "", "Noodles", 50 * i, true, getCurrentIndex());
     }
 }
 
@@ -94,7 +94,6 @@ function clearModelInputs() {
     mHasRead.checked = false;
 }
 
-//FIXME: Something is wrong
 function getCurrentIndex() {
     return bookLibrary.length > 0 ? bookLibrary[bookLibrary.length - 1].index + 1 : 0;
 }
@@ -110,6 +109,7 @@ function addBookToLibrary(title, author, pages, hasRead) {
 }
 
 function addBookToGrid(book, index) {
+    console.log("Index when book is added " + index)
     let card = document.createElement("div");   
     card.className = "card";
     card.setAttribute("data-index", index);
@@ -191,9 +191,10 @@ function updateStatus(book) {
 //
 function updateLibrary(array) {
     array.forEach(function(item, index) {
+        console.log("" + item.index);
         let card = document.createElement("div");   
         card.className = "card";
-        card.setAttribute("data-index", index);
+        card.setAttribute("data-index", item.index);
         
         let title = document.createElement("p"); 
         title.className = "title";
@@ -266,6 +267,9 @@ function loadFromLocalStorage() {
             let book = JSON.parse(localStorage.getItem(key));
             bookLibrary.push(new Book(book.title, book.author, book.pages, book.hasRead, book.index));
         }
+        bookLibrary.sort(function(bookA, bookB) {
+            return bookA.index - bookB.index;
+        });
         updateLibrary(bookLibrary);
     }
 }

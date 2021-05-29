@@ -14,18 +14,8 @@ let mHasRead = document.getElementById("mhasRead");
 let bookLibrary = [];
 let currIndex = 0;
 
+// Loads from local storage immediately.
 loadFromLocalStorage();
-// test();
-
-//FIXME: Contains slight error with the sorting of elements once 
-//       once an element has been deleted. The ids (indexs) are 
-//       being copied to new books. I need to fix this for it to 
-//       fully work
-function test() {
-    for(let i = 0; i < 6; i++) {
-        addBookToLibrary("Test " + getCurrentIndex() + "", "Noodles", 50 * i, true, getCurrentIndex());
-    }
-}
 
 addBook.addEventListener("click", function() {
     modal.style.display = "block";
@@ -104,6 +94,10 @@ function addBookToLibrary(title, author, pages, hasRead) {
         let book = new Book(title, author, pages, hasRead, index);
         bookLibrary.push(book);
         addBookToGrid(book, index);
+
+        // I am not sure if you can set the array in localStorage to be sorted in a particular way.
+        // If possible, you could change this so that books can be reorganized and put in different 
+        // orders or based on ascending/descending order without hardcoding that in. 
         window.localStorage.setItem(`book-${index}`, JSON.stringify(book));
     }
 }
@@ -267,6 +261,10 @@ function loadFromLocalStorage() {
             let book = JSON.parse(localStorage.getItem(key));
             bookLibrary.push(new Book(book.title, book.author, book.pages, book.hasRead, book.index));
         }
+
+        // Fixes this glitch that was happening. It sorts the books in bookLibrary based on their index.
+        // This could be used for changing the implementation if you wanted ascending and descending order
+        // in the library.
         bookLibrary.sort(function(bookA, bookB) {
             return bookA.index - bookB.index;
         });

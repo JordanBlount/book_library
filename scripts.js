@@ -14,6 +14,49 @@ let mHasRead = document.getElementById("mhasRead");
 let bookLibrary = [];
 let currIndex = 0;
 
+
+class Book {
+    constructor(title, author, pages, hasRead, index) {
+        this._title = title;
+        this._author = author;
+        this._pages = pages;
+        this._hasRead = hasRead;
+        this._index = index;
+    }
+
+    get title() {
+        return this._title;
+    }
+
+    get author() {
+        return this._author;
+    }
+
+    get pages() {
+        return this._pages;
+    }
+
+    get hasRead() {
+        return this._hasRead;
+    }
+
+    get index() {
+        return this._index;
+    }
+
+    changeStatus() {
+        if(!this.hasRead) {
+            this._hasRead = true;
+        } else {
+            this._hasRead = false;
+        }
+    }
+
+    readReadStatus() {
+        return this.hasRead ? 'Read' : "Has not read";
+    }
+}
+
 // Loads from local storage immediately.
 loadFromLocalStorage();
 
@@ -39,38 +82,15 @@ window.onclick = function (event) {
     }
 }
 
-function Book(title, author, pages, hasRead, index) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.hasRead = hasRead;
-    this.index = index;
-
-    this.info = function() {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ` 
-        + this.hasRead ? `already read.` : `not read yet.`;
-    }
-
-    this.changeStatus = function() {
-        if(!this.hasRead) {
-            this.hasRead = true;
-        } else {
-            this.hasRead = false;
-        }
-    }
-
-    this.getReadStatus = function() {
-        return this.hasRead ? `Read` : `Has not read`;
-    }
-}
-
 function addBookFromModel() {
-    if(mTitle.value !== "" && mAuthor.value !== "" && !negativeNum(mPages)) {
-        addBookToLibrary(mTitle.value, mAuthor.value, mPages.value, mHasRead.checked);
+    console.log(mTitle.value)
+    if(mTitle.value !== "" && mAuthor.value !== "" && parseInt(mPages.value) > 0) {
+        addBookToLibrary(mTitle.value, mAuthor.value, parseInt(mPages.value), mHasRead.checked);
         clearModelInputs();
         return true;
+    } else {
+        return false;
     }
-    return false;
 }
 
 function negativeNum(num) {
@@ -89,12 +109,12 @@ function getCurrentIndex() {
 }
 
 function addBookToLibrary(title, author, pages, hasRead) {
-    if(title !== '' && author !== '' && pages !== 0) {
+    if(title !== '' && author !== '' && pages > 0) {
         let index = getCurrentIndex();
         let book = new Book(title, author, pages, hasRead, index);
+        console.log(book);
         bookLibrary.push(book);
         addBookToGrid(book, index);
-
         // I am not sure if you can set the array in localStorage to be sorted in a particular way.
         // If possible, you could change this so that books can be reorganized and put in different 
         // orders or based on ascending/descending order without hardcoding that in. 
@@ -185,7 +205,6 @@ function updateStatus(book) {
 //
 function updateLibrary(array) {
     array.forEach(function(item, index) {
-        console.log("" + item.index);
         let card = document.createElement("div");   
         card.className = "card";
         card.setAttribute("data-index", item.index);
@@ -259,9 +278,10 @@ function loadFromLocalStorage() {
         for (let i = 0; i < localStorage.length; i++) {
             let key = localStorage.key(i);
             let book = JSON.parse(localStorage.getItem(key));
-            bookLibrary.push(new Book(book.title, book.author, book.pages, book.hasRead, book.index));
+            bookLibrary.push(new Book(book._title, book._author, book._pages, book._hasRead, book._index));
         }
 
+        console.log(bookLibrary);
         // Fixes this glitch that was happening. It sorts the books in bookLibrary based on their index.
         // This could be used for changing the implementation if you wanted ascending and descending order
         // in the library.

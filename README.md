@@ -34,3 +34,7 @@ https://stackoverflow.com/questions/7084557/select-all-elements-with-a-data-xxx-
 
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
 
+
+**Other**
+
+https://coryrylan.com/blog/javascript-es6-class-syntax

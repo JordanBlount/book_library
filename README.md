@@ -38,3 +38,5 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_liter
 **Other**
 
 https://coryrylan.com/blog/javascript-es6-class-syntax
+
+https://javascript.plainenglish.io/javascript-classes-an-in-depth-look-part-2-88b666ed3546
